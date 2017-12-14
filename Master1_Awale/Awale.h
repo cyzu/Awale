@@ -20,15 +20,15 @@ typedef struct {
     int grains_humain;  // Les grains récupérés par le joueur 1
     int grains_ordi;    // Les grains récupérés par le joueur 2
     
-    int joueur;         // == 1 si c'est au joueur 1 de jouer, == 0 quand c'est le joueur 2 (ordinateur = joueur 2)
+    int joueur;         // == 1 si c'est au joueur 1 de jouer, == 0 quand c'est le joueur 2 (ordinateur)
 } EtatJeu;
 
 void initialisation (EtatJeu *a);
 
 /* Fonctions utilisées par min-max */
-int positionFinale(EtatJeu *partie, int joueur, int profondeur);
+int positionFinale(EtatJeu *partie, const int joueur);
 int evaluation(EtatJeu *partie, int joueur, int profondeur);
-inline int coupValide(EtatJeu const *partie, int const joueur, int case_);
+inline int coupValide(EtatJeu const *partie, const int case_);
 void jouerCoup(EtatJeu *partie_suivante, EtatJeu *partie, int joueur, int case_);
 
 inline int valeurMax(int const tableau[5]);

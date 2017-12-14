@@ -15,6 +15,9 @@ Distribution des cailloux dans l'ordre des aiguilles d'une montre.
 ● joueur 1 = humain, joueur 0 = ordi
 ● MIN = joueur 0 (ordi) , MAX joueur 1 (humain)
 
+ordi :      [5][6][7][8][9]     DANS LA STRUCTURE !!!!
+humain :    [4][3][2][1][0]
+
 ### Règle du jeu
   - Le joueur sélectionne un trou dans sa rangée.
   - Il distribue tous les cailloux présent dans ce trou une à une dans les trous suivants.
@@ -26,7 +29,7 @@ Distribution des cailloux dans l'ordre des aiguilles d'une montre.
   
 ### Fin du jeu
   - Si un joueur a récupéré plus de 20 cailloux (plus de la moitié), il gagne la partie.
-  - Sinon le jeu se termine lorsque le joueur ne peut plus jouer (il ne possède plus de cailloux). Dans ce cas celui qui possède les cailloux restant les récupère, et celui qui a le plus de cailloux gagne la partie.
+  - Sinon le jeu se termine lorsque le joueur ne peut plus jouer (il ne possède plus de cailloux). Dans ce cas celui qui possède encore des cailloux les récupère, et celui qui possède le plus de cailloux gagne la partie.
   - Aucune capture de graines n'est possible
   
 
@@ -44,5 +47,7 @@ Distribution des cailloux dans l'ordre des aiguilles d'une montre.
 - Adversaire joue, et récupère toutes les graines d joueur, on peut?
 - règle de donner les graines à l'adversaire si il n'a plus de graine
 - fonction évaluation ? à quoi ça sert, pourquoi ?
-- quand le coup n'est pas valide, pourquoi -100, +100 ?'
+- quand le coup n'est pas valide, pourquoi -100, +100 ?
+- pourquoi retourner valeurMAX (40) quand c'est une positionFinale ?
+- coupValide(), on vérifie que si il y a des graines ?
   
