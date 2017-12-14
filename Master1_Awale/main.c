@@ -12,8 +12,22 @@
 
 int main (int argc, char *argv[]) {
     
-    Awale awale;
-    initialisation(&awale);
+    EtatJeu partie;
+    initialisation(&partie);
+    
+    afficher_jeu(&partie);
+    
+    partie.plateau[5] = 0;
+    partie.plateau[6] = 0;
+    partie.plateau[0] = 0;
+    partie.plateau[4] = 10;
+    humain_joue(&partie, 4);
+    
+    afficher_jeu(&partie);
+    
+    return 0;
+    
+    /*TODO : vérifier après l'appel de coupValide, case_ ne change pas de valeur ! */
     
     return 0;
 }

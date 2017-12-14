@@ -9,8 +9,11 @@ Un joueur humain VS ordinateur.
 
 Maximum 2s par coup pour chaque joueur.
 
-
 Distribution des cailloux dans l'ordre des aiguilles d'une montre.
+
+● profondeur maximale = 30
+● joueur 1 = humain, joueur 0 = ordi
+● MIN = joueur 0 (ordi) , MAX joueur 1 (humain)
 
 ### Règle du jeu
   - Le joueur sélectionne un trou dans sa rangée.
@@ -22,7 +25,7 @@ Distribution des cailloux dans l'ordre des aiguilles d'une montre.
   - Aucun joueur ne peut passer son tour.
   
 ### Fin du jeu
-  - Si un joueur a récupéré plus de 20 cailloux, il gagne la partie.
+  - Si un joueur a récupéré plus de 20 cailloux (plus de la moitié), il gagne la partie.
   - Sinon le jeu se termine lorsque le joueur ne peut plus jouer (il ne possède plus de cailloux). Dans ce cas celui qui possède les cailloux restant les récupère, et celui qui a le plus de cailloux gagne la partie.
   - Aucune capture de graines n'est possible
   
@@ -36,4 +39,10 @@ Distribution des cailloux dans l'ordre des aiguilles d'une montre.
   
 ### Remerciement
 ### Installation
+
+##questions : 
+- Adversaire joue, et récupère toutes les graines d joueur, on peut?
+- règle de donner les graines à l'adversaire si il n'a plus de graine
+- fonction évaluation ? à quoi ça sert, pourquoi ?
+- quand le coup n'est pas valide, pourquoi -100, +100 ?'
   

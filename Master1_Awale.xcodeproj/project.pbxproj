@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		7D3D0C6B1FE2800A005B847F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D3D0C6A1FE2800A005B847F /* main.c */; };
 		7D3D0C731FE28032005B847F /* Awale.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D3D0C721FE28032005B847F /* Awale.c */; };
-		7D3D0C751FE2804B005B847F /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 7D3D0C741FE2804B005B847F /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,7 +28,6 @@
 		7D3D0C6A1FE2800A005B847F /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		7D3D0C711FE28032005B847F /* Awale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Awale.h; sourceTree = "<group>"; };
 		7D3D0C721FE28032005B847F /* Awale.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Awale.c; sourceTree = "<group>"; };
-		7D3D0C741FE2804B005B847F /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = "../Master1_Awalé/README.md"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,7 +44,6 @@
 		7D3D0C5E1FE2800A005B847F = {
 			isa = PBXGroup;
 			children = (
-				7D3D0C741FE2804B005B847F /* README.md */,
 				7D3D0C691FE2800A005B847F /* Master1_Awale */,
 				7D3D0C681FE2800A005B847F /* Products */,
 			);
@@ -63,11 +60,19 @@
 		7D3D0C691FE2800A005B847F /* Master1_Awale */ = {
 			isa = PBXGroup;
 			children = (
+				7D3D0C771FE28818005B847F /* source */,
+			);
+			path = Master1_Awale;
+			sourceTree = "<group>";
+		};
+		7D3D0C771FE28818005B847F /* source */ = {
+			isa = PBXGroup;
+			children = (
 				7D3D0C6A1FE2800A005B847F /* main.c */,
 				7D3D0C711FE28032005B847F /* Awale.h */,
 				7D3D0C721FE28032005B847F /* Awale.c */,
 			);
-			path = Master1_Awale;
+			name = source;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -127,7 +132,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7D3D0C751FE2804B005B847F /* README.md in Sources */,
 				7D3D0C731FE28032005B847F /* Awale.c in Sources */,
 				7D3D0C6B1FE2800A005B847F /* main.c in Sources */,
 			);
