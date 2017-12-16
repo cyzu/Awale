@@ -9,25 +9,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "Awale.h"
+#include "Utils.h"
 
 int main (int argc, char *argv[]) {
-    
     EtatJeu partie;
-    initialisation(&partie);
+    int premier;
     
-    afficher_jeu(&partie);
+    affichageDepart();
+    scanf("%d", &premier);
+    printf("\n\n");
     
-    partie.plateau[5] = 0;
-    partie.plateau[6] = 0;
-    partie.plateau[0] = 0;
-    partie.plateau[4] = 10;
-    humain_joue(&partie, 4);
+    initialisation(&partie, premier);
     
-    afficher_jeu(&partie);
-    
-    return 0;
-    
-    /*TODO : vérifier après l'appel de coupValide, case_ ne change pas de valeur ! */
+    jouer(&partie);
     
     return 0;
 }

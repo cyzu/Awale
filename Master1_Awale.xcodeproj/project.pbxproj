@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7D3D0C6B1FE2800A005B847F /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D3D0C6A1FE2800A005B847F /* main.c */; };
 		7D3D0C731FE28032005B847F /* Awale.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D3D0C721FE28032005B847F /* Awale.c */; };
+		7D96B85A1FE3C05D004ADFBF /* Utils.c in Sources */ = {isa = PBXBuildFile; fileRef = 7D96B8591FE3C05D004ADFBF /* Utils.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		7D3D0C6A1FE2800A005B847F /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
 		7D3D0C711FE28032005B847F /* Awale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Awale.h; sourceTree = "<group>"; };
 		7D3D0C721FE28032005B847F /* Awale.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Awale.c; sourceTree = "<group>"; };
+		7D96B8581FE3C05D004ADFBF /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		7D96B8591FE3C05D004ADFBF /* Utils.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Utils.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,6 +74,8 @@
 				7D3D0C6A1FE2800A005B847F /* main.c */,
 				7D3D0C711FE28032005B847F /* Awale.h */,
 				7D3D0C721FE28032005B847F /* Awale.c */,
+				7D96B8581FE3C05D004ADFBF /* Utils.h */,
+				7D96B8591FE3C05D004ADFBF /* Utils.c */,
 			);
 			name = source;
 			sourceTree = "<group>";
@@ -132,6 +137,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D96B85A1FE3C05D004ADFBF /* Utils.c in Sources */,
 				7D3D0C731FE28032005B847F /* Awale.c in Sources */,
 				7D3D0C6B1FE2800A005B847F /* main.c in Sources */,
 			);
@@ -262,6 +268,7 @@
 				7D3D0C701FE2800A005B847F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -9,9 +9,8 @@
 #ifndef Awale_h
 #define Awale_h
 
-#define PROFONDEUR_MAX 30
+#define PROFONDEUR_MAX 2
 #define GRAINS_MAX 40
-#define CASE_PAR_PERSONNE 5
 
 #include <stdio.h>
 
@@ -23,28 +22,17 @@ typedef struct {
     int joueur;         // == 1 si c'est au joueur 1 de jouer, == 0 quand c'est le joueur 2 (ordinateur)
 } EtatJeu;
 
-void initialisation (EtatJeu *a);
+void initialisation (EtatJeu *a, int joueur);
 
 /* Fonctions utilisées par min-max */
 int positionFinale(EtatJeu *partie, const int joueur);
-int evaluation(EtatJeu *partie, int joueur, int profondeur);
-inline int coupValide(EtatJeu const *partie, const int case_);
+int evaluation(EtatJeu const *partie);
+int coupValide(EtatJeu *partie, const int case_);
 void jouerCoup(EtatJeu *partie_suivante, EtatJeu *partie, int joueur, int case_);
 
-inline int valeurMax(int const tableau[5]);
-inline int valeurMin(int const tableau[5]);
+int valeurMax(int const tableau[5]);
+int valeurMin(int const tableau[5]);
 
 int valeurMinMax(EtatJeu *partie, int joueur, int profondeur);
-
-
-
-/********************/
-/*      HUMAIN      */
-/********************/
-
-
-void afficher_jeu (EtatJeu *a);
-void humain_joue (EtatJeu *a, int trou_choisie);
-
 
 #endif /* Awale_h */

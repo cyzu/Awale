@@ -44,9 +44,7 @@ humain :    [4][3][2][1][0]
 ### Installation
 
 ##questions : 
-- Adversaire joue, et récupère toutes les graines d joueur, on peut?
-- règle de donner les graines à l'adversaire si il n'a plus de graine
-- fonction évaluation ? à quoi ça sert, pourquoi ?
+✓ fonction évaluation ? déterminer une valeur a la profondeur max
 - quand le coup n'est pas valide, pourquoi -100, +100 ?
 - pourquoi retourner valeurMAX (40) quand c'est une positionFinale ?
 - coupValide(), on vérifie que si il y a des graines ?
