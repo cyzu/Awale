@@ -9,7 +9,7 @@
 #ifndef Awale_h
 #define Awale_h
 
-#define PROFONDEUR_MAX 2
+#define PROFONDEUR_MAX 5
 #define GRAINS_MAX 40
 
 #include <stdio.h>

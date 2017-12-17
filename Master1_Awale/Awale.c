@@ -69,6 +69,11 @@ int positionFinale(EtatJeu *partie, const int joueur){
 
 int evaluation(EtatJeu const *partie){
     return abs(partie->grains_humain - partie->grains_ordi);
+    
+    // fonction evaluation == celui qui prend le plus de graines !!!!
+    // changer jouerCoup
+    
+    // faire alpha beta dans la boucle de min -max
 }
 
 /* Vérifie que la case_ peut être jouée par le joueur :
@@ -122,22 +127,22 @@ void jouerCoup(EtatJeu *partie_suivante, EtatJeu *partie, int joueur, int case_)
 
 /* Retourne la valeaur maximale du tableau */
 int valeurMax(int const tableau[5]){
-    int maximum = tableau[0];
+    int maximum = 0;
    
     int i = 0;
     for (i = 0; i < 5; i++) {
-        if (tableau[i] > maximum && tableau[i] < GRAINS_MAX && tableau[i] >= 0) maximum = tableau[i];
+        if (tableau[i] > tableau[maximum] && tableau[i] < GRAINS_MAX && tableau[i] >= 0) maximum = i;
     }
     return maximum;
 }
 
 /* Retourne la valeur minimale du tableau */
 int valeurMin(int const tableau[5]){
-    int minimum = tableau[0];
+    int minimum = 0;
     
     int i = 0;
     for (i = 0; i < 5; i++) {
-        if (tableau[i] < minimum && tableau[i] >= 0 && tableau[i] < GRAINS_MAX) minimum = tableau[i];
+        if (tableau[i] < tableau[minimum] && tableau[i] >= 0 && tableau[i] < GRAINS_MAX) minimum = i;
     }
     return minimum;
 }
@@ -181,15 +186,12 @@ int valeurMinMax(EtatJeu *partie_actuelle, int joueur, int profondeur){
             if (joueur == 0) plateau[i] = -100;
             else plateau[i] = +100;
         }
-        printf("____plateau[%d] = %d\n",i, plateau[i]);
     }
     
     int grains = 0;
     
     if (joueur == 0) grains = valeurMax(plateau);
     else  grains = valeurMin(plateau);
-    
-    printf("$$$$$$ case choisi ? %d, joueur %d\n", grains, partie_actuelle->joueur);
     return grains;
 }
 
