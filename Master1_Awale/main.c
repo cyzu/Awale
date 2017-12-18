@@ -21,6 +21,17 @@ int main (int argc, char *argv[]) {
     
     initialisation(&partie, premier);
     
+    /*partie.plateau[0] = 3;
+    partie.plateau[1] = 2;
+    partie.plateau[2] = 2;
+    partie.plateau[3] = 1;
+    partie.plateau[4] = 11;
+    partie.plateau[5] = 4;
+    partie.plateau[6] = 4;
+    partie.plateau[7] = 6;
+    partie.plateau[8] = 4;
+    partie.plateau[9] = 2;*/
+    
     jouer(&partie);
     
     return 0;

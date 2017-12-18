@@ -9,30 +9,33 @@
 #ifndef Awale_h
 #define Awale_h
 
-#define PROFONDEUR_MAX 5
-#define GRAINS_MAX 40
+#define NB_TOTAL_CASES 20
+#define PROFONDEUR_MAX 2
+#define GRAINS_MAX 80
 
 #include <stdio.h>
 
 typedef struct {
-    int plateau[10];    // Le plateau du jeu. [0, 4] humain (joueur 1). [5, 9] ordi (joueur 2)
+    int plateau[NB_TOTAL_CASES];    // Le plateau du jeu. [0, 4] humain (joueur 1). [5, 9] ordi (joueur 2)
     int grains_humain;  // Les grains récupérés par le joueur 1
     int grains_ordi;    // Les grains récupérés par le joueur 2
     
     int joueur;         // == 1 si c'est au joueur 1 de jouer, == 0 quand c'est le joueur 2 (ordinateur)
+    
+    int grains_recup[NB_TOTAL_CASES];
 } EtatJeu;
 
 void initialisation (EtatJeu *a, int joueur);
 
 /* Fonctions utilisées par min-max */
 int positionFinale(EtatJeu *partie, const int joueur);
-int evaluation(EtatJeu const *partie);
+int evaluation(EtatJeu const *partie, int const case_);
 int coupValide(EtatJeu *partie, const int case_);
-void jouerCoup(EtatJeu *partie_suivante, EtatJeu *partie, int joueur, int case_);
+void jouerCoup(EtatJeu *partie_suivante, EtatJeu const *partie, int joueur, int case_);
 
-int valeurMax(int const tableau[5]);
-int valeurMin(int const tableau[5]);
+int valeurMax(int const indice, int const tableau[NB_TOTAL_CASES/2]);
+int valeurMin(int const indice, int const tableau[NB_TOTAL_CASES/2]);
 
-int valeurMinMax(EtatJeu *partie, int joueur, int profondeur);
+int valeurMinMax(EtatJeu *partie, int joueur, int profondeur, int const case_);
 
 #endif /* Awale_h */

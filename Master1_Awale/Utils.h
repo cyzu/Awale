@@ -14,6 +14,7 @@
 
 void afficherJeu (EtatJeu *a);
 void affichageDepart();
+void affichageFin(EtatJeu *partie);
 
 void humainJoue (EtatJeu *a, int trou_choisie);
 void ordiJoue(EtatJeu *partie);

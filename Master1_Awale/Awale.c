@@ -12,7 +12,10 @@
 /* Initialisation de la structure */
 void initialisation (EtatJeu *a, int joueur){
     int i = 0;
-    for (i = 0; i < 10; i++) a->plateau[i] = 4;
+    for (i = 0; i < NB_TOTAL_CASES; i++) {
+        a->plateau[i] = 4;
+        a->grains_recup[i] = 0;
+    }
     
     a->grains_humain = 0;
     a->grains_ordi = 0;
@@ -33,47 +36,70 @@ int positionFinale(EtatJeu *partie, const int joueur){
     
     /* Vérifie qu'il n'y a plus de graines chez le joueur */
     if (joueur == 0){
-        if (partie->plateau[5] + partie->plateau[6] + partie->plateau[7] + partie->plateau[8] + partie->plateau[8] == 0){
+        if (partie->plateau[0] + partie->plateau[1] + partie->plateau[2] + partie->plateau[3] + partie->plateau[4] + partie->plateau[5] + partie->plateau[6] + partie->plateau[7] + partie->plateau[8] + partie->plateau[9] == 0){
             /* le joueur 1 récupère toutes les graines restantes */
-            partie->grains_humain += partie->plateau[0] + partie->plateau[1] + partie->plateau[2] + partie->plateau[3] + partie->plateau[4];
+            partie->grains_humain += partie->plateau[10] + partie->plateau[11] + partie->plateau[12] + partie->plateau[13] + partie->plateau[14] + partie->plateau[15] + partie->plateau[16] + partie->plateau[17] + partie->plateau[18] + partie->plateau[19];
+            
+            partie->plateau[10]= 0;
+            partie->plateau[11]= 0;
+            partie->plateau[12]= 0;
+            partie->plateau[13]= 0;
+            partie->plateau[14]= 0;
+            partie->plateau[15]= 0;
+            partie->plateau[16]= 0;
+            partie->plateau[17]= 0;
+            partie->plateau[18]= 0;
+            partie->plateau[19]= 0;
             
             return 1;
         }
     }
-    else if (partie->plateau[0] + partie->plateau[1] + partie->plateau[2] + partie->plateau[3] + partie->plateau[4] == 0){
+    else if (partie->plateau[10] + partie->plateau[11] + partie->plateau[12] + partie->plateau[13] + partie->plateau[14] + partie->plateau[15] + partie->plateau[16] + partie->plateau[17] + partie->plateau[18] + partie->plateau[19] == 0){
         /* le joueur 2 (ordi) récupère toutes les graines restantes */
-        partie->grains_ordi += partie->plateau[5] + partie->plateau[6] + partie->plateau[7] + partie->plateau[8] + partie->plateau[9];
+        
+        partie->grains_ordi += partie->plateau[0] + partie->plateau[1] + partie->plateau[2] + partie->plateau[3] + partie->plateau[4] + partie->plateau[5] + partie->plateau[6] + partie->plateau[7] + partie->plateau[8] + partie->plateau[9];
+        
+        partie->plateau[0]= 0;
+        partie->plateau[1]= 0;
+        partie->plateau[2]= 0;
+        partie->plateau[3]= 0;
+        partie->plateau[4]= 0;
+        partie->plateau[5]= 0;
+        partie->plateau[6]= 0;
+        partie->plateau[7]= 0;
+        partie->plateau[8]= 0;
+        partie->plateau[9]= 0;
         
         return 1;
     }
     
     
     /* Etat boucle (il n'y a plus qu'une graine chez chaque joueur sans pouvoir être prises */
-    if ((partie->plateau[5] + partie->plateau[6] + partie->plateau[7] + partie->plateau[8] + partie->plateau[8]) == 1 &&
-        (partie->plateau[0] + partie->plateau[1] + partie->plateau[2] + partie->plateau[3] + partie->plateau[4]) == 1){
+    if ((partie->plateau[0] + partie->plateau[1] + partie->plateau[2] + partie->plateau[3] + partie->plateau[4] + partie->plateau[5] + partie->plateau[6] + partie->plateau[7] + partie->plateau[8] + partie->plateau[9]) == 1 &&
+        (partie->plateau[10] + partie->plateau[11] + partie->plateau[12] + partie->plateau[13] + partie->plateau[14] + partie->plateau[15] + partie->plateau[16] + partie->plateau[17] + partie->plateau[18] + partie->plateau[19]) == 1){
         int case_humain = -1, case_ordi = -1;
         
          /* Récupérer les numéros de cases n'ayant qu'une seule graine */
         int i = 0;
-        for (i = 0; i < 5; i++) {
-            if (partie->plateau[i] == 1) case_humain = i;
-        }
-        for (i = 5; i < 10; i++) {
+        for (i = 0; i < NB_TOTAL_CASES/2; i++) {
             if (partie->plateau[i] == 1) case_ordi = i;
         }
+        for (i = NB_TOTAL_CASES/2; i < NB_TOTAL_CASES; i++) {
+            if (partie->plateau[i] == 1) case_humain = i;
+        }
         
-        if (case_ordi - case_humain == 5) return 1;
+        if (case_humain - case_ordi == NB_TOTAL_CASES/2) return 1;
     }
     return 0;
 }
 
-int evaluation(EtatJeu const *partie){
-    return abs(partie->grains_humain - partie->grains_ordi);
+int evaluation(EtatJeu const *partie, int const case_){
+    return partie->grains_recup[case_];
+    //return abs(partie->grains_humain - partie->grains_ordi);
     
     // fonction evaluation == celui qui prend le plus de graines !!!!
     // changer jouerCoup
     
-    // faire alpha beta dans la boucle de min -max
 }
 
 /* Vérifie que la case_ peut être jouée par le joueur :
@@ -81,16 +107,17 @@ int evaluation(EtatJeu const *partie){
     - return 0 sinon
  */
 int coupValide(EtatJeu *partie, const int case_){
-    //printf("$$ (joueur %d) $$ coup valide [%d] ?  %d\n", partie->joueur, case_, partie->plateau[case_] > 0);
+    //printf("** coup valide [%d] ? %d (il y a %d cailloux) ****\n", case_, partie->plateau[case_] > 0, partie->plateau[case_]);
     return (partie->plateau[case_] > 0);
 }
 
-void jouerCoup(EtatJeu *partie_suivante, EtatJeu *partie, int joueur, int case_){
+void jouerCoup(EtatJeu *partie_suivante, EtatJeu const *partie, int joueur, int case_){
     
-    // copier partie dans partie_suivante?
+    // copier partie dans partie_suivante
     int i = 0;
-    for (i = 0; i < 10; i++) {
+    for (i = 0; i < NB_TOTAL_CASES ; i++) {
         partie_suivante->plateau[i] = partie->plateau[i];
+        partie_suivante->grains_recup[i] = partie->grains_recup[i];
     }
     partie_suivante->grains_humain = partie->grains_humain;
     partie_suivante->grains_ordi = partie->grains_ordi;
@@ -104,7 +131,7 @@ void jouerCoup(EtatJeu *partie_suivante, EtatJeu *partie, int joueur, int case_)
     for(i = nb_graine; i > 0; i--){
         case_tmp ++;
         
-        if (case_tmp > 9) case_tmp = 0;
+        if (case_tmp > NB_TOTAL_CASES - 1) case_tmp = 0;
         if (case_tmp == case_) case_tmp ++;
         
         
@@ -112,50 +139,74 @@ void jouerCoup(EtatJeu *partie_suivante, EtatJeu *partie, int joueur, int case_)
     }
     /* Récupération des graines si on peut en prendre */
     if (joueur == 0){
-        for (i = case_tmp; i <= 4 && i >= 0 && (partie_suivante->plateau[i] == 2 || partie_suivante->plateau[i] == 3); i--) {
+        for (i = case_tmp; i < NB_TOTAL_CASES && i >= NB_TOTAL_CASES/2 && (partie_suivante->plateau[i] == 2 || partie_suivante->plateau[i] == 3); i--) {
             partie_suivante->grains_ordi += partie_suivante->plateau[i];
+            partie_suivante->grains_recup[case_] += partie_suivante->plateau[i];
             partie_suivante->plateau[i] = 0;
+             printf("---jouerCoup (%d): grains récup[%d] = %d\n", joueur,case_, partie_suivante->grains_recup[case_]);
         }
     }
     else {
-        for (i = case_tmp; i <= 9 && i >= 5 && (partie_suivante->plateau[i] == 2 || partie_suivante->plateau[i] == 3); i--) {
+        for (i = case_tmp; i < NB_TOTAL_CASES/2 && i >= 0 && (partie_suivante->plateau[i] == 2 || partie_suivante->plateau[i] == 3); i--) {
             partie_suivante->grains_humain += partie_suivante->plateau[i];
+            partie_suivante->grains_recup[case_] += partie_suivante->plateau[i];
             partie_suivante->plateau[i] = 0;
+            printf("---jouerCoup : grains récup[%d] = %d\n", case_, partie_suivante->grains_recup[case_]);
         }
     }
+    
 }
 
-/* Retourne la valeaur maximale du tableau */
-int valeurMax(int const tableau[5]){
+/* Retourne la valeur maximale du tableau */
+int valeurMax(int const indice, int const tableau[NB_TOTAL_CASES/2]){
     int maximum = 0;
-   
     int i = 0;
-    for (i = 0; i < 5; i++) {
-        if (tableau[i] > tableau[maximum] && tableau[i] < GRAINS_MAX && tableau[i] >= 0) maximum = i;
+
+    if (indice == 0){
+        for (i = 0; i < NB_TOTAL_CASES/2; i++) {
+            if (tableau[i] > maximum && tableau[i] <= GRAINS_MAX && tableau[i] > 0) maximum = tableau[i];
+        }
+    }
+    else {
+        for (i = 0; i < NB_TOTAL_CASES/2; i++) {
+            if (tableau[i] > tableau[maximum] && tableau[i] <= GRAINS_MAX && tableau[i] >= 0) maximum = i;
+        }
     }
     return maximum;
 }
 
 /* Retourne la valeur minimale du tableau */
-int valeurMin(int const tableau[5]){
+int valeurMin(int const indice, int const tableau[NB_TOTAL_CASES/2]){
     int minimum = 0;
-    
     int i = 0;
-    for (i = 0; i < 5; i++) {
-        if (tableau[i] < tableau[minimum] && tableau[i] >= 0 && tableau[i] < GRAINS_MAX) minimum = i;
+    
+    if (indice == 0){
+        for (i = 0; i < NB_TOTAL_CASES/2; i++) {
+            if (tableau[i] < minimum && tableau[i] < GRAINS_MAX && tableau[i] > 0) minimum = tableau[i];
+        }
+    }
+    else {
+        for (i = 0; i < NB_TOTAL_CASES/2; i++) {
+            if (tableau[i] < tableau[minimum] && tableau[i] < GRAINS_MAX && tableau[i] >= 0) minimum = i;
+        }
     }
     return minimum;
 }
 
 /* Algotithme Min-max pour déterminer le meilleur coup à jouer */
-int valeurMinMax(EtatJeu *partie_actuelle, int joueur, int profondeur){
+int valeurMinMax(EtatJeu *partie_actuelle, int joueur, int profondeur, int const case_){
     EtatJeu coup_suivant;
-    int plateau[5];
+    int tableau_valeurs[NB_TOTAL_CASES/2];
+    
+    /* Initialisation tableau_valeurs[] */
+    int j = 0;
+    for (j = 0; j < NB_TOTAL_CASES/2; j++) tableau_valeurs[j] = 0;
     
     /* Conditions d'arrêt de la récurrence :
         - la partie est terminée
         - on a atteint la profondeur maximale
      */
+    //printf("Profondeur = %d, joueur = %d\n", profondeur, joueur);
     if (positionFinale(partie_actuelle, joueur)){
         //retourner GRAINS_MAX si ordi gagne, -GRAINS_MAX si humain gagne, -1 si partie nulle
         
@@ -165,14 +216,14 @@ int valeurMinMax(EtatJeu *partie_actuelle, int joueur, int profondeur){
     }
     
     else if (profondeur == PROFONDEUR_MAX){
-        return evaluation(partie_actuelle);
+        return evaluation(partie_actuelle, case_);
         // dans un premier temps l'évaluation sera la
         // difference du nb de pions pris
     }
     
-    int case_correct = (1 - joueur) * 5;
+    int case_correct = joueur * NB_TOTAL_CASES/2;
     int i = 0;
-    for(i = 0; i < 5; i++){
+    for(i = 0; i < NB_TOTAL_CASES/2; i++){
         
         if (coupValide(partie_actuelle, i + case_correct)){
             // on joue le coup i a partir de la position
@@ -180,18 +231,31 @@ int valeurMinMax(EtatJeu *partie_actuelle, int joueur, int profondeur){
             // dans pos_next
             jouerCoup(&coup_suivant, partie_actuelle, joueur, i + case_correct);
             // pos_next devient la position courante, et on change le joueur
-            plateau[i] = valeurMinMax(&coup_suivant, (joueur + 1) % 2, profondeur + 1);
+            tableau_valeurs[i] = valeurMinMax(&coup_suivant, (joueur + 1) % 2, profondeur + 1, i + case_correct);
         }
         else {
-            if (joueur == 0) plateau[i] = -100;
-            else plateau[i] = +100;
+            if (joueur == 0) tableau_valeurs[i] = -500;
+            else tableau_valeurs[i] = 500;
         }
+        //printf("---------- tab_valeurs[%d] = %d\n\n", i, tableau_valeurs[i]);
     }
     
-    int grains = 0;
+    printf("Profondeur : %d\n", profondeur);
+    for (int k = 0; k < NB_TOTAL_CASES/2; k++) {
+        printf("    tableau_valeurs[%d] = %d\n", k, tableau_valeurs[k]);
+    }
     
-    if (joueur == 0) grains = valeurMax(plateau);
-    else  grains = valeurMin(plateau);
-    return grains;
+    int case_choisie = 0;
+    if (profondeur == 0){
+        if (joueur == 0) case_choisie = valeurMax(1, tableau_valeurs);
+        else  case_choisie = valeurMin(1, tableau_valeurs);
+    }
+    else {
+        if (joueur == 0) case_choisie = valeurMax(0, tableau_valeurs);
+        else  case_choisie = valeurMin(0, tableau_valeurs);
+    }
+    
+    printf("case_choisie = %d\n", case_choisie);
+    return case_choisie;
 }
 

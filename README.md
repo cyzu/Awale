@@ -2,8 +2,8 @@
  *Master 1 Informatique, Résolution de problèmes*
 
 ### Description du jeu
-On possède une planche de 2 rangées ayant 5 trous chacune (c'est à dire 10 trous au total).
-Au début de la partie, chaque trous possèdes 4 cailloux (40 cailloux au total).
+On possède une planche de 2 rangées ayant 10 trous chacune (c'est à dire 20 trous au total).
+Au début de la partie, chaque trous possèdes 4 cailloux (80 cailloux au total).
 
 Un joueur humain VS ordinateur.
 
@@ -15,8 +15,8 @@ Distribution des cailloux dans l'ordre des aiguilles d'une montre.
 ● joueur 1 = humain, joueur 0 = ordi
 ● MIN = joueur 0 (ordi) , MAX joueur 1 (humain)
 
-ordi :      [5][6][7][8][9]     DANS LA STRUCTURE !!!!
-humain :    [4][3][2][1][0]
+ordi :      [ 0][ 1][ 2][ 3][ 4][ 5][ 6][ 7][ 8][ 9]      
+humain :    [19][18][17][16][15][14][13][12][11][10] 
 
 ### Règle du jeu
   - Le joueur sélectionne un trou dans sa rangée.
