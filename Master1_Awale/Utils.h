@@ -10,8 +10,10 @@
 #define Utils_h
 
 #include <stdio.h>
+#include <time.h>
 #include "Awale.h"
 
+void verifieOption (int *joueur);
 void afficherJeu (EtatJeu *a);
 void affichageDepart();
 void affichageFin(EtatJeu *partie);

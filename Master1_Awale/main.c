@@ -17,6 +17,7 @@ int main (int argc, char *argv[]) {
     
     affichageDepart();
     scanf("%d", &premier);
+    verifieOption (&premier);
     printf("\n\n");
     
     initialisation(&partie, premier);
