@@ -99,8 +99,6 @@ void ordiJoue(EtatJeu *partie){
     partie->joueur = (partie->joueur + 1)%2;
 }
 
-
-
 void jouer(EtatJeu *partie){
     int case_;
     

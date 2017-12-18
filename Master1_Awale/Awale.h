@@ -9,14 +9,12 @@
 #ifndef Awale_h
 #define Awale_h
 
-#define PROFONDEUR_MAX 7
+#define PROFONDEUR_MAX 9
 #define GRAINS_MAX 80
 
 #define NB_TOTAL_CASES 20
 #define MIN_NUM	-500
 #define MAX_NUM 500
-
-#include <stdio.h>
 
 typedef struct {
     int plateau[NB_TOTAL_CASES];    // Le plateau du jeu. [0, 4] humain (joueur 1). [5, 9] ordi (joueur 2)
@@ -31,12 +29,13 @@ void initialisation (EtatJeu *a, int joueur);
 
 /* Fonctions utilisées par min-max */
 int positionFinale(EtatJeu *partie, const int joueur);
-int evaluation(EtatJeu const *partie, int joueur);int coupValide(EtatJeu *partie, const int case_);
-void jouerCoup(EtatJeu *partie_suivante, EtatJeu const *partie, int joueur, int case_);
+static inline int evaluation(EtatJeu const *partie);
+static inline int coupValide(EtatJeu const *partie, const int case_);
+void jouerCoup(EtatJeu *partie_suivante, EtatJeu const *partie, int const joueur, int const case_);
 
 int valeurMax(int const prof, int const tableau[NB_TOTAL_CASES/2]);
 int valeurMin(int const prof, int const tableau[NB_TOTAL_CASES/2]);
 
-int valeurMinMax(EtatJeu *partie, int joueur, int profondeur, int min, int max);
+int valeurMinMax(EtatJeu *partie, int const joueur, int const profondeur, int const min, int const max);
 
 #endif /* Awale_h */

@@ -11,16 +11,17 @@ LIBS = -lm
 CCFLAGS = -Wall -ggdb
 
 OBJ = Awale.o Utils.o
+OPTI = -O3
 EXEC = awale
 
 
 all: $(EXEC)
 
 $(EXEC): main.c $(OBJ)
-	$(CC) $(CCFLAGS) $^ -o $(EXEC)
+	$(CC) $(CCFLAGS) $(OPTI) $^ -o $(EXEC)
 
 .c.o:
-	$(CC) $(CCFLAGS) -c $<
+	$(CC) $(CCFLAGS) $(OPTI) -c $<
 
 .PHONY : clean
 
