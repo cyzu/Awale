@@ -7,27 +7,19 @@
 //
 
 #include <math.h>
+#include <unistd.h>
 #include "Awale.h"
 
 /* Initialisation de la structure */
 void initialisation (EtatJeu *a, int joueur){
     int i = 0;
-    for (i = 0; i < NB_TOTAL_CASES; i++) {
-        a->plateau[i] = 4;
-
-
-//        a->grains_recup[i] = 0;
-
-
-
-    }
+    for (i = 0; i < NB_TOTAL_CASES; i++) a->plateau[i] = 4;
     
     a->grains_humain = 0;
     a->grains_ordi = 0;
     
     a->joueur = joueur;
 }
-
 
 
 /* Cherche si la partie actuelle est une position finale :
@@ -44,19 +36,20 @@ int positionFinale(EtatJeu *partie, const int joueur){
     /* Vérifie qu'il n'y a plus de graines chez le joueur */
     if (joueur == 0) {
         if (partie->plateau[0] + partie->plateau[1] + partie->plateau[2] + partie->plateau[3] + partie->plateau[4] + partie->plateau[5] + partie->plateau[6] + partie->plateau[7] + partie->plateau[8] + partie->plateau[9] == 0){
-            /* le joueur 1 récupère toutes les graines restantes */
-       //     partie->grains_humain += partie->plateau[10] + partie->plateau[11] + partie->plateau[12] + partie->plateau[13] + partie->plateau[14] + partie->plateau[15] + partie->plateau[16] + partie->plateau[17] + partie->plateau[18] + partie->plateau[19];
             
-//            partie->plateau[10]= 0;
-//            partie->plateau[11]= 0;
-//            partie->plateau[12]= 0;
-//            partie->plateau[13]= 0;
-//            partie->plateau[14]= 0;
-//            partie->plateau[15]= 0;
-//            partie->plateau[16]= 0;
-//            partie->plateau[17]= 0;
-//            partie->plateau[18]= 0;
-//            partie->plateau[19]= 0;
+            /* le joueur 1 récupère toutes les graines restantes */
+            partie->grains_humain += partie->plateau[10] + partie->plateau[11] + partie->plateau[12] + partie->plateau[13] + partie->plateau[14] + partie->plateau[15] + partie->plateau[16] + partie->plateau[17] + partie->plateau[18] + partie->plateau[19];
+            
+            partie->plateau[10]= 0;
+            partie->plateau[11]= 0;
+            partie->plateau[12]= 0;
+            partie->plateau[13]= 0;
+            partie->plateau[14]= 0;
+            partie->plateau[15]= 0;
+            partie->plateau[16]= 0;
+            partie->plateau[17]= 0;
+            partie->plateau[18]= 0;
+            partie->plateau[19]= 0;
             
             return 1;
         }
@@ -64,18 +57,18 @@ int positionFinale(EtatJeu *partie, const int joueur){
     else if (partie->plateau[10] + partie->plateau[11] + partie->plateau[12] + partie->plateau[13] + partie->plateau[14] + partie->plateau[15] + partie->plateau[16] + partie->plateau[17] + partie->plateau[18] + partie->plateau[19] == 0){
         /* le joueur 2 (ordi) récupère toutes les graines restantes */
         
- //       partie->grains_ordi += partie->plateau[0] + partie->plateau[1] + partie->plateau[2] + partie->plateau[3] + partie->plateau[4] + partie->plateau[5] + partie->plateau[6] + partie->plateau[7] + partie->plateau[8] + partie->plateau[9];
+        partie->grains_ordi += partie->plateau[0] + partie->plateau[1] + partie->plateau[2] + partie->plateau[3] + partie->plateau[4] + partie->plateau[5] + partie->plateau[6] + partie->plateau[7] + partie->plateau[8] + partie->plateau[9];
         
-//        partie->plateau[0]= 0;
-//        partie->plateau[1]= 0;
-//        partie->plateau[2]= 0;
-//        partie->plateau[3]= 0;
-//        partie->plateau[4]= 0;
-//        partie->plateau[5]= 0;
-//        partie->plateau[6]= 0;
-//        partie->plateau[7]= 0;
-//        partie->plateau[8]= 0;
-//        partie->plateau[9]= 0;
+        partie->plateau[0]= 0;
+        partie->plateau[1]= 0;
+        partie->plateau[2]= 0;
+        partie->plateau[3]= 0;
+        partie->plateau[4]= 0;
+        partie->plateau[5]= 0;
+        partie->plateau[6]= 0;
+        partie->plateau[7]= 0;
+        partie->plateau[8]= 0;
+        partie->plateau[9]= 0;
         
         return 1;
     }
@@ -183,7 +176,6 @@ int evaluation(EtatJeu const *partie, int joueur) {//, int const case_){
     - return 0 sinon
  */
 int coupValide(EtatJeu *partie, const int case_){
-    //printf("** coup valide [%d] ? %d (il y a %d cailloux) ****\n", case_, partie->plateau[case_] > 0, partie->plateau[case_]);
     return (partie->plateau[case_] > 0);
 }
 
@@ -195,7 +187,6 @@ void jouerCoup(EtatJeu *partie_suivante, EtatJeu const *partie, int joueur, int 
     int i = 0;
     for (i = 0; i < NB_TOTAL_CASES ; i++) {
         partie_suivante->plateau[i] = partie->plateau[i];
-//       partie_suivante->grains_recup[i] = partie->grains_recup[i];
     }
     partie_suivante->grains_humain = partie->grains_humain;
     partie_suivante->grains_ordi = partie->grains_ordi;
@@ -220,17 +211,13 @@ void jouerCoup(EtatJeu *partie_suivante, EtatJeu const *partie, int joueur, int 
     if (joueur == 0){
         for (i = case_tmp; i < NB_TOTAL_CASES && i >= NB_TOTAL_CASES/2 && (partie_suivante->plateau[i] == 2 || partie_suivante->plateau[i] == 3); i--) {
             partie_suivante->grains_ordi += partie_suivante->plateau[i];
-//            partie_suivante->grains_recup[case_] += partie_suivante->plateau[i];
             partie_suivante->plateau[i] = 0;
-  //           printf("---jouerCoup (%d): grains récup[%d] = %d\n", joueur,case_, partie_suivante->grains_recup[case_]);
         }
     }
     else {
         for (i = case_tmp; i < NB_TOTAL_CASES/2 && i >= 0 && (partie_suivante->plateau[i] == 2 || partie_suivante->plateau[i] == 3); i--) {
             partie_suivante->grains_humain += partie_suivante->plateau[i];
- //           partie_suivante->grains_recup[case_] += partie_suivante->plateau[i];
             partie_suivante->plateau[i] = 0;
- //           printf("---jouerCoup : grains récup[%d] = %d\n", case_, partie_suivante->grains_recup[case_]);
         }
     }    
 }
@@ -244,16 +231,16 @@ int valeurMax(int const prof, int const tableau[NB_TOTAL_CASES/2]) {
 
     if (prof == 0) {
         for (int i = 0; i < NB_TOTAL_CASES/2; i++) {
-        	if (tableau[i] > tableau[maximum]) maximum = i;
+        	if ((tableau[i] > tableau[maximum] || tableau[maximum] > GRAINS_MAX) && tableau[i] <= GRAINS_MAX) maximum = i;
         }
-    } else {
+    }
+    else {
         for (int i = 0; i < NB_TOTAL_CASES/2; i++) {
-            if (tableau[i] > maximum) maximum = tableau[i];
+            if ((tableau[i] > tableau[maximum] || tableau[maximum] > GRAINS_MAX) && tableau[i] <= GRAINS_MAX) maximum = tableau[i];
         }
     }
     return maximum;
 }
-
 
 
 /* Retourne la valeur minimale du tableau */
@@ -262,11 +249,11 @@ int valeurMin(int const prof, int const tableau[NB_TOTAL_CASES/2]) {
 
     if (prof == 0) {
         for (int i = 0; i < NB_TOTAL_CASES/2; i++) {
-        	if (tableau[i] < tableau[minimum]) minimum = i;
+        	if ((tableau[i] < tableau[minimum] || tableau[minimum] < 0) && tableau[i] > 0) minimum = i;
         }
     } else {
         for (int i = 0; i < NB_TOTAL_CASES/2; i++) {
-            if (tableau[i] < minimum) minimum = tableau[i];
+            if ((tableau[i] < minimum || tableau[minimum] < 0) && tableau[i] > 0) minimum = tableau[i];
         }
     }
     return minimum;
@@ -275,7 +262,7 @@ int valeurMin(int const prof, int const tableau[NB_TOTAL_CASES/2]) {
 
 
 /* Algotithme Min-max pour déterminer le meilleur coup à jouer */
-int valeurMinMax(EtatJeu *partie_actuelle, int joueur, int profondeur, int min, int max) {//, int const case_){
+int valeurMinMax(EtatJeu *partie_actuelle, int joueur, int profondeur, int min, int max) {
     EtatJeu coup_suivant;
     int tableau_valeurs[NB_TOTAL_CASES/2];
     
@@ -287,41 +274,40 @@ int valeurMinMax(EtatJeu *partie_actuelle, int joueur, int profondeur, int min, 
         - la partie est terminée
         - on a atteint la profondeur maximale
      */
-    //printf("Profondeur = %d, joueur = %d\n", profondeur, joueur);
     if (positionFinale(partie_actuelle, joueur)) {
         //retourner GRAINS_MAX si ordi gagne, -GRAINS_MAX si humain gagne, -1 si partie nulle
         
-        if (partie_actuelle->grains_humain > partie_actuelle->grains_ordi) return -GRAINS_MAX;
-        else if (partie_actuelle->grains_ordi > partie_actuelle->grains_humain) return GRAINS_MAX;
+        if (partie_actuelle->grains_humain > partie_actuelle->grains_ordi) return GRAINS_MAX;
+        else if (partie_actuelle->grains_ordi > partie_actuelle->grains_humain) return -GRAINS_MAX;
         else return 0;
     }
     
     else if (profondeur == PROFONDEUR_MAX){
-        return evaluation(partie_actuelle, joueur);//, case_);
+        return evaluation(partie_actuelle, joueur);
         // dans un premier temps l'évaluation sera la
         // difference du nb de pions pris
     }
 
 
+/*
+    int case_correct = joueur * NB_TOTAL_CASES/2;
+    int i = 0;
+    for(i = 0; i < NB_TOTAL_CASES/2; i++){
 
-//    int case_correct = joueur * NB_TOTAL_CASES/2;
-//    int i = 0;
-//    for(i = 0; i < NB_TOTAL_CASES/2; i++){
-//
-//        if (coupValide(partie_actuelle, i + case_correct)){
-//            // on joue le coup i a partir de la position
-//            // pos_courante et on met le rÈsultat
-//            // dans pos_next
-//            jouerCoup(&coup_suivant, partie_actuelle, joueur, i + case_correct);
-//            // pos_next devient la position courante, et on change le joueur
-//            tableau_valeurs[i] = valeurMinMax(&coup_suivant, (joueur + 1) % 2, profondeur + 1, 0, 0);
-//        }
-//        else {
-//            if (joueur == 0) tableau_valeurs[i] = -500;
-//            else tableau_valeurs[i] = 500;
-//        }
-//    }
-
+        if (coupValide(partie_actuelle, i + case_correct)){
+            // on joue le coup i a partir de la position
+            // pos_courante et on met le rÈsultat
+            // dans pos_next
+            jouerCoup(&coup_suivant, partie_actuelle, joueur, i + case_correct);
+            // pos_next devient la position courante, et on change le joueur
+            tableau_valeurs[i] = valeurMinMax(&coup_suivant, (joueur + 1) % 2, profondeur + 1, 0, 0);
+        }
+        else {
+            if (joueur == 0) tableau_valeurs[i] = -500;
+            else tableau_valeurs[i] = 500;
+        }
+    }
+*/
 
 
     int val;
@@ -352,7 +338,8 @@ int valeurMinMax(EtatJeu *partie_actuelle, int joueur, int profondeur, int min, 
 	        }
 	    }
 
-    } else { // MIN
+    }
+    else { // MIN
 		val = max;
 
 		for(int i = 0; i < NB_TOTAL_CASES/2; i++) {
@@ -377,27 +364,10 @@ int valeurMinMax(EtatJeu *partie_actuelle, int joueur, int profondeur, int min, 
 	        }
 	    }
 	}
-
-
-
-//    printf("\n\n");
-//    for(int j=0; j<5; j++) {
-//    	printf("%d ", plateau[j]);
-//    }
-//    printf("		%d		%d\n\n", profondeur, val);
-
-//    printf("Profondeur : %d\n", profondeur);
-//    for (int k = 0; k < NB_TOTAL_CASES/2; k++) {
-//        printf("    tableau_valeurs[%d] = %d\n", k, tableau_valeurs[k]);
-//    }
-    
-
     int case_choisie = 0;
     if (joueur == 0) case_choisie = valeurMax(profondeur, tableau_valeurs);
     else  case_choisie = valeurMin(profondeur, tableau_valeurs);
 
-    
-    //printf("case_choisie = %d\n", case_choisie);
     return case_choisie;
 }
 

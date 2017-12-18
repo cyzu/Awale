@@ -24,28 +24,19 @@ typedef struct {
     int grains_ordi;    // Les grains récupérés par le joueur 2
     
     int joueur;         // == 1 si c'est au joueur 2 de jouer, == 0 quand c'est le joueur 1 (ordinateur)
-
-
-
-    
- //   int grains_recup[NB_TOTAL_CASES];
-
-
-
-
 } EtatJeu;
+
 
 void initialisation (EtatJeu *a, int joueur);
 
 /* Fonctions utilisées par min-max */
 int positionFinale(EtatJeu *partie, const int joueur);
-int evaluation(EtatJeu const *partie, int joueur);//, int const case_);
-int coupValide(EtatJeu *partie, const int case_);
+int evaluation(EtatJeu const *partie, int joueur);int coupValide(EtatJeu *partie, const int case_);
 void jouerCoup(EtatJeu *partie_suivante, EtatJeu const *partie, int joueur, int case_);
 
 int valeurMax(int const prof, int const tableau[NB_TOTAL_CASES/2]);
 int valeurMin(int const prof, int const tableau[NB_TOTAL_CASES/2]);
 
-int valeurMinMax(EtatJeu *partie, int joueur, int profondeur, int min, int max);//, int const case_);
+int valeurMinMax(EtatJeu *partie, int joueur, int profondeur, int min, int max);
 
 #endif /* Awale_h */

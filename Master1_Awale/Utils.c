@@ -10,7 +10,7 @@
 
 void verifieOption (int *joueur) {
 	while ((*joueur)!=0  && (*joueur)!=1){
-		printf("\n\n/!\\ Option invalid\n\n\n ");
+		printf("\n\n/!\\ Option invalide\n\n\n ");
 		printf("Choisissez le mode de Jeu : \n      0 : l'ordinateur qui commence\n      1 : à vous de commencer\n      (pas de mode humain vs humain pour le moment)\n\nréponse : ");
 
 		scanf("%d", joueur);
@@ -35,9 +35,9 @@ void affichageFin(EtatJeu *partie){
     printf("\n\n LA PARTIE EST TERMINÉE ~☆\n\nAvec ce jeu :");
     afficherJeu(partie);
 
-    if (partie->grains_ordi > partie->grains_humain)     printf("\nLe gagnant est  :  l'ordinateur");
-	else if (partie->grains_ordi < partie->grains_humain)   printf("\nLe gagnant est  :  vous! BRAVO!!");
-    else printf("\nVous avez obtenu le meme score ");
+    if (partie->grains_ordi > partie->grains_humain)     printf("Le gagnant est  :  l'ordinateur...\n");
+	else if (partie->grains_ordi < partie->grains_humain)   printf("Le gagnant est  :  vous! BRAVO!!\n");
+    else printf("\nVous avez obtenu le meme score.\n");
 }
 
 
@@ -68,18 +68,12 @@ void humainJoue(EtatJeu *a, int trou_choisie) {
 
 
 void ordiJoue(EtatJeu *partie){
-    
-
-
 	clock_t tic = clock();
 
 	int case_choisie = valeurMinMax(partie, 0, 0, MIN_NUM, MAX_NUM);
 
     clock_t toc = clock();
     printf("\n\nElapsed: %f seconds\n\n", (double)(toc - tic) / CLOCKS_PER_SEC);
-
-
-
 
     
     printf("**** L'ordinateur a choisi la case %d ↓\n", case_choisie + 1);
