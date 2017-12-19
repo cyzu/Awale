@@ -42,32 +42,36 @@ void affichageFin(EtatJeu *partie){
 
 
 
-void humainJoue(EtatJeu *a, int trou_choisie) {
+void humainJoue(EtatJeu *partie, int case_choisie)
+{
+    int case_tmp = case_choisie;
+    int nb_grains = partie->plateau[case_choisie];
     
-    int trou = trou_choisie;
-    int nb_grains = a->plateau[trou_choisie];
-    a->plateau[trou_choisie] = 0;
-    
-    for (int i = 0; i < nb_grains; i++) {
-        trou++;
+    partie->plateau[case_choisie] = 0;
+
+    while (nb_grains--) {
+    	case_tmp++;
         
-        if (trou > NB_TOTAL_CASES - 1) trou = 0;
-        if (trou == trou_choisie) trou++;	// saute le trou sélectionné
+        if (case_tmp == NB_TOTAL_CASES) case_tmp = 0;
+        if (case_tmp == case_choisie) case_tmp++;	// saute le trou sélectionné
         
-        a->plateau[trou]++;
+        partie->plateau[case_tmp]++;
     }
     
     // dans le plateau de l'ordi
-    for(int i = trou; i < NB_TOTAL_CASES/2 && (a->plateau[i] == 2 || a->plateau[i] == 3); i--) {
-        a->grains_humain += a->plateau[i];
-        a->plateau[i] = 0;
+    if(case_tmp < MOITIE_CASES) {
+    	while (case_tmp-- && ((nb_grains = partie->plateau[case_tmp]) == 2 || nb_grains == 3)) {
+    		partie->grains_humain += nb_grains;
+    		partie->plateau[case_tmp] = 0;
+		}
     }
-    a->joueur = (a->joueur + 1)%2;
+    partie->joueur = !partie->joueur;
 }
 
 
 
-void ordiJoue(EtatJeu *partie){
+void ordiJoue(EtatJeu *partie)
+{
 	clock_t tic = clock();
 
 	int case_choisie = valeurMinMax(partie, 0, 0, MIN_NUM, MAX_NUM);
@@ -76,39 +80,46 @@ void ordiJoue(EtatJeu *partie){
     printf("\n\nElapsed: %f seconds\n\n", (double)(toc - tic) / CLOCKS_PER_SEC);
 
     
+
     printf("**** L'ordinateur a choisi la case %d ↓\n", case_choisie + 1);
+
+
+    int case_tmp = case_choisie;
     int nb_grains = partie->plateau[case_choisie];
-    int case_ = case_choisie;
-    
+
     partie->plateau[case_choisie] = 0;
     
-    for (int i = 0; i < nb_grains; i++) {
-        case_++;
+    while (nb_grains--) {
+    	case_tmp++;
         
-        if (case_ > NB_TOTAL_CASES - 1) case_ = 0;
-        if (case_ == case_choisie) case_++;	// saute le trou sélectionné
+        if (case_tmp == NB_TOTAL_CASES) case_tmp = 0;
+        if (case_tmp == case_choisie) case_tmp++;	// saute le trou sélectionné
         
-        partie->plateau[case_]++;
+        partie->plateau[case_tmp]++;
     }
     
     // dans le plateau du joueur
-    for(int i = case_; i >= NB_TOTAL_CASES/2 && (partie->plateau[i] == 2 || partie->plateau[i] == 3); i--) {
-        partie->grains_ordi += partie->plateau[i];
-        partie->plateau[i] = 0;
-    }
-    partie->joueur = (partie->joueur + 1)%2;
+    while ((case_tmp-- - MOITIE_CASES) && ((nb_grains = partie->plateau[case_tmp]) == 2 || nb_grains == 3)) {
+    	partie->grains_ordi += nb_grains;
+    	partie->plateau[case_tmp] = 0;
+	}
+    partie->joueur = !partie->joueur;
 }
 
-void jouer(EtatJeu *partie){
+
+
+void jouer(EtatJeu *partie)
+{
     int case_;
     
-    while (!positionFinale(partie, partie->joueur)){
+    while (!positionFinale(partie, partie->joueur))
+    {
         afficherJeu(partie);
         if (partie->joueur == 0) ordiJoue(partie);
         else {
             printf("A vous de jouer ! Quel case choisissez-vous ?   ");
             scanf("%d", &case_);
-            while (!(case_ <= NB_TOTAL_CASES && case_ > NB_TOTAL_CASES/2)){
+            while (!(case_ <= NB_TOTAL_CASES && case_ > MOITIE_CASES)){
                 printf("\n/!\\ Cette case ne vous appartient pas !\nChoisissez à partir de votre plateau :  ");
                 
                 scanf("%d", &case_);

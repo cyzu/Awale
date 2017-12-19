@@ -9,10 +9,12 @@
 #ifndef Awale_h
 #define Awale_h
 
-#define PROFONDEUR_MAX 9
+#define PROFONDEUR_MAX 8
 #define GRAINS_MAX 80
 
 #define NB_TOTAL_CASES 20
+#define MOITIE_CASES 10
+
 #define MIN_NUM	-500
 #define MAX_NUM 500
 
@@ -33,8 +35,8 @@ static inline int evaluation(EtatJeu const *partie);
 static inline int coupValide(EtatJeu const *partie, const int case_);
 void jouerCoup(EtatJeu *partie_suivante, EtatJeu const *partie, int const joueur, int const case_);
 
-int valeurMax(int const prof, int const tableau[NB_TOTAL_CASES/2]);
-int valeurMin(int const prof, int const tableau[NB_TOTAL_CASES/2]);
+int valeurMax(int const prof, int* const tableau);
+int valeurMin(int const prof, int* const tableau);
 
 int valeurMinMax(EtatJeu *partie, int const joueur, int const profondeur, int const min, int const max);
 
