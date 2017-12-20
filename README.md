@@ -1,49 +1,49 @@
 # Jeu Awalé
- *Master 1 Informatique, Résolution de problèmes*
-*_Université Nice Sophia-Antipolis_*
+###### Master 1 Informatique 2017
+###### Université Nice Sophia-Antipolis
 
 ### Description du jeu
-On possède une planche de 2 rangées ayant 6 trous chacune traditionnellement (c'est à dire 12 trous au total).
-Le jeu est initialisé avec 4 cailloux par cases, c'est à dire 48 cailloux au total.
+Ce jeu originaire d'afraique, se joue par toutes les personnes, pour tous ages, quotidiennement.
 
-Ce jeu se joue a 2, a tour de rôle les joueurs choisissent un case puis distribue les cailloux.
+On possède une planche de ayant 2 rangées de 6 trous, c'est à dire 12 trous au total.
+Il est initialisé avec 4 cailloux dans tous les trous.
+
+Il se joue par 2 personnes, choisissant à tour de rôle une case, puis distribue les cailloux vers les autres trous.
 
 ### Règle du jeu
   - Le joueur sélectionne un trou dans sa rangée.
   - Il distribue tous les cailloux présent dans ce trou une à une dans les trous suivants.
-  - Si le trou sélectionnée posséde 10 ou plus de cailloux, il saute le trou sélectionnée.
+  - Si le trou sélectionné posséde 12 ou plus de cailloux, il saute le trou sélectionné.
   - Si le trou final possède 2 ou 3 cailloux, le joueur peut récupérer les cailloux. 
-  Si les trous précédents possèdent de même 2 ou 3 trous, il récupère les cailloux (récupération à la chaine).
-  - Si l'adversaire n'a plus de cailloux, le joueur doit jouer un coup lui donnant au moins 1.
+  Si les trous précédents possèdent de même 2 ou 3 cailloux, il récupère les cailloux (récupération à la chaine).
+  - Si l'adversaire n'a plus de cailloux, le joueur doit jouer un coup lui en donnant au moins 1.
   - Aucun joueur ne peut passer son tour.
   
 ### Fin du jeu
-  - Si un joueur a récupéré plus de la moitié, il gagne la partie (majorité absolue).
+  - Si un joueur a récupéré plus de la moitié des cailloux, il gagne la partie (majorité absolue).
   - Sinon le jeu se termine lorsque le joueur ne peut plus jouer (il ne possède plus de cailloux).
   - Aucune capture de graines n'est possible
   
 
 ### Implémentation
-Ce projet consiste a implémenter ce jeu avec de l'intelligence artificiel en modifiant quelques règles (le rendre plus difficile).
+Ce projet consiste a implémenter ce jeu en intégrant de l'intelligence artificiel. Il ne nous été pas demandé d'implémenter le jeu tel décrit ci-dessus.
 
-*Les règles requises : *
-    - humain VS ordinateur (IA)
-    - planche de 2 * 10 cases (au total 20 cases, 80 cailloux)
-    - maximum 2s par coup
-    - distribution des cailloux dans l'ordre des aiguilles d'une montre
+###### Les règles requises :
+   - humain VS ordinateur (IA)
+   - planche de 2 * 10 cases (au total 20 cases, 80 cailloux)
+   - maximum 2s par coup
+   - distribution des cailloux dans l'ordre des aiguilles d'une montre
+   - la règle permettant de nourrir l'adversaire n'est pas obligatoire
+   - implémenter l'algorithme min-max pour trouver le meilleur coup possible
+   - implémenter l'heuristique :alpha:-:beta:
 
-    - implémenter l'algorithme min-max pour trouver le meilleur coup possible
-    - implémenter l'heuristique :alpha:-:beta:
-
-### Structure dans le code
-
-● profondeur maximale = 8
-● joueur 1 = humain = min / joueur 0 = ordi = max
-
-‘‘‘
-ordi :      [ 0][ 1][ 2][ 3][ 4][ 5][ 6][ 7][ 8][ 9]      
-humain :    [19][18][17][16][15][14][13][12][11][10] 
-‘‘‘
+###### Structure dans le code
+   - profondeur maximale = 8
+   - joueur 1 = humain = min
+   - joueur 0 = ordi = max
+   
+          ordi :      [ 0][ 1][ 2][ 3][ 4][ 5][ 6][ 7][ 8][ 9]      
+          humain :    [19][18][17][16][15][14][13][12][11][10]
  
 ### Authors
   - Chloé Bensoussan
@@ -51,8 +51,14 @@ humain :    [19][18][17][16][15][14][13][12][11][10]
   
 ### Installation
 Télécharger le projet puis :
-    - lancer depuis xcode
-    - lancer depuis le terminal avec ‘make all‘ ‘./awale‘ on pourra par la suite supprimer les .o avec ‘make clean‘
+  - lancer depuis xcode
+  - lancer depuis le terminal avec 
+                              
+        make all
+        ./awale 
+  - on pourra par la suite supprimer les .o et l'exec avec :
+  
+        make clean
 
 ### Commentaires et remerciements
 Nous avons réaliser ce projet en moins d'une semaine. Ayant un gros manque de temps, nous n'avons pas pu implémenter une bonne fonction d'évaluation déterminant les meilleurs coup à jouer pour gagner la partie. C'est pourquoi l'ordinateur est d'un niveau plutôt faible. La profondeur de recherche dans l'arbre reste de même assez faible.
