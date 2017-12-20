@@ -1,22 +1,12 @@
 # Jeu Awalé
  *Master 1 Informatique, Résolution de problèmes*
+*_Université Nice Sophia-Antipolis_*
 
 ### Description du jeu
-On possède une planche de 2 rangées ayant 10 trous chacune (c'est à dire 20 trous au total).
-Au début de la partie, chaque trous possèdes 4 cailloux (80 cailloux au total).
+On possède une planche de 2 rangées ayant 6 trous chacune traditionnellement (c'est à dire 12 trous au total).
+Le jeu est initialisé avec 4 cailloux par cases, c'est à dire 48 cailloux au total.
 
-Un joueur humain VS ordinateur.
-
-Maximum 2s par coup pour chaque joueur.
-
-Distribution des cailloux dans l'ordre des aiguilles d'une montre.
-
-● profondeur maximale = 30
-● joueur 1 = humain, joueur 0 = ordi
-● MIN = joueur 0 (ordi) , MAX joueur 1 (humain)
-
-ordi :      [ 0][ 1][ 2][ 3][ 4][ 5][ 6][ 7][ 8][ 9]      
-humain :    [19][18][17][16][15][14][13][12][11][10] 
+Ce jeu se joue a 2, a tour de rôle les joueurs choisissent un case puis distribue les cailloux.
 
 ### Règle du jeu
   - Le joueur sélectionne un trou dans sa rangée.
@@ -28,24 +18,48 @@ humain :    [19][18][17][16][15][14][13][12][11][10]
   - Aucun joueur ne peut passer son tour.
   
 ### Fin du jeu
-  - Si un joueur a récupéré plus de 20 cailloux (plus de la moitié), il gagne la partie.
-  - Sinon le jeu se termine lorsque le joueur ne peut plus jouer (il ne possède plus de cailloux). Dans ce cas celui qui possède encore des cailloux les récupère, et celui qui possède le plus de cailloux gagne la partie.
+  - Si un joueur a récupéré plus de la moitié, il gagne la partie (majorité absolue).
+  - Sinon le jeu se termine lorsque le joueur ne peut plus jouer (il ne possède plus de cailloux).
   - Aucune capture de graines n'est possible
   
 
 ### Implémentation
- Implémenter l'algorithme min-max pour jouer le meilleur coup possible, puis l'heuristique :alpha:-:beta:.
+Ce projet consiste a implémenter ce jeu avec de l'intelligence artificiel en modifiant quelques règles (le rendre plus difficile).
+
+*Les règles requises : *
+    - humain VS ordinateur (IA)
+    - planche de 2 * 10 cases (au total 20 cases, 80 cailloux)
+    - maximum 2s par coup
+    - distribution des cailloux dans l'ordre des aiguilles d'une montre
+
+    - implémenter l'algorithme min-max pour trouver le meilleur coup possible
+    - implémenter l'heuristique :alpha:-:beta:
+
+### Structure dans le code
+
+● profondeur maximale = 8
+● joueur 1 = humain = min / joueur 0 = ordi = max
+
+‘‘‘
+ordi :      [ 0][ 1][ 2][ 3][ 4][ 5][ 6][ 7][ 8][ 9]      
+humain :    [19][18][17][16][15][14][13][12][11][10] 
+‘‘‘
  
 ### Authors
   - Chloé Bensoussan
   - Andreina Wilhelm
   
-### Remerciement
 ### Installation
+Télécharger le projet puis :
+    - lancer depuis xcode
+    - lancer depuis le terminal avec ‘make all‘ ‘./awale‘ on pourra par la suite supprimer les .o avec ‘make clean‘
 
-##questions : 
-✓ fonction évaluation ? déterminer une valeur a la profondeur max
-- quand le coup n'est pas valide, pourquoi -100, +100 ?
-- pourquoi retourner valeurMAX (40) quand c'est une positionFinale ?
-- coupValide(), on vérifie que si il y a des graines ?
-  
+### Commentaires et remerciements
+Nous avons réaliser ce projet en moins d'une semaine. Ayant un gros manque de temps, nous n'avons pas pu implémenter une bonne fonction d'évaluation déterminant les meilleurs coup à jouer pour gagner la partie. C'est pourquoi l'ordinateur est d'un niveau plutôt faible. La profondeur de recherche dans l'arbre reste de même assez faible.
+
+Cependant, pendant ce court lapse de temps, nous avons pu débuté dans l'optimisation d'un programme. Une fois l'implémentation du code plutôt correct, nous nous sommes concentrées sur l'optimisation du temps de l'exécution du programme. En se servant des cours suivis et des recherches, nous avons comparé des bouts de code, nous cherchions à supprimer des boucles, des variables, et enfin nous réfléchissions à un nouvel algorithme faisant les mêmes instructions.
+Par cette manière nous avons ajouter les mots-clés ‘const‘ et ‘inline‘ dans notre code mais nous avons remarqué que le compilateur est aujourd'hui très puissant, sachant bien optimiser sans avoir de l'aide du programmeur.
+
+
+
+Amusez-vous bien ! Merci beaucoup :star:

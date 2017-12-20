@@ -14,11 +14,11 @@
 #include "Awale.h"
 
 void verifieOption (int *joueur);
-void afficherJeu (EtatJeu *a);
+void afficherJeu (EtatJeu const *a);
 void affichageDepart();
-void affichageFin(EtatJeu *partie);
+void affichageFin(EtatJeu const *partie, int const resultat);
 
-void humainJoue (EtatJeu *a, int trou_choisie);
+void humainJoue (EtatJeu *a, int const case_choisie);
 void ordiJoue(EtatJeu *partie);
 
 void jouer(EtatJeu *partie);

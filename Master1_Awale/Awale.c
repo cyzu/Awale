@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include "Awale.h"
 
-// Initialisation de la structure
+/* Initialisation de la structure */
 void initialisation (EtatJeu *a, int const joueur) {
     for(int i =0; i< NB_TOTAL_CASES; i ++) a->plateau[i] = 4;
     
@@ -20,14 +20,13 @@ void initialisation (EtatJeu *a, int const joueur) {
 }
 
 
+ /* Cherche si la partie actuelle est une position finale :
+    - plus de graines chez un joueur
+    - un joueur a récupéré plus de la moitié des graines
+    - on ne peut plus prendre de graines (états boucles)
 
-// Cherche si la partie actuelle est une position finale :
-//    - plus de graines chez un joueur
-//    - un joueur a récupéré plus de la moitié des graines
-//    - on ne peut plus prendre de graines (états boucles)
-//
-// Retourne 1 si c'est une position finale, 0 sinon.
-//
+ Retourne 1 si c'est une position finale, 0 sinon.
+*/
 int positionFinale(EtatJeu *partie, const int joueur){
     // Un des joueurs a récupéré plus de la moitié des graines
 	int moitie_grains = GRAINS_MAX/2;
@@ -72,16 +71,14 @@ int positionFinale(EtatJeu *partie, const int joueur){
 }
 
 
-
 inline int evaluation(EtatJeu const *partie) {
-    return abs(partie->grains_humain - partie->grains_ordi);
+    return abs(partie->grains_ordi - partie->grains_humain);
 }
 
 
-
-//	Vérifie que la case_ peut être jouée par le joueur :
-//    - return 1 si c'est possible,
-//    - return 0 sinon
+/*	Vérifie que la case_ peut être jouée par le joueur :
+    - return 1 si c'est possible,
+    - return 0 sinon */
 inline int coupValide(EtatJeu const *partie, const int case_){
     return partie->plateau[case_] > 0;
 }
@@ -92,7 +89,6 @@ void jouerCoup(EtatJeu *partie_suivante, EtatJeu const *partie, int const joueur
     // copier partie dans partie_suivante
 	int i = NB_TOTAL_CASES + 1;
 	while(i--) partie_suivante->plateau[i] = partie->plateau[i];
-
 
     partie_suivante->grains_humain = partie->grains_humain;
     partie_suivante->grains_ordi = partie->grains_ordi;
@@ -118,25 +114,25 @@ void jouerCoup(EtatJeu *partie_suivante, EtatJeu const *partie, int const joueur
     case_tmp++;
     if (joueur == 0)
     {
-		while ((case_tmp-- - MOITIE_CASES) && ((nb_grains = partie_suivante->plateau[case_tmp]) == 2 || nb_grains == 3)) {
+		while ((case_tmp - MOITIE_CASES) >= 0 && ((nb_grains = partie_suivante->plateau[case_tmp]) == 2 || nb_grains == 3)) {
 			partie_suivante->grains_ordi += nb_grains;
 			partie_suivante->plateau[case_tmp] = 0;
 		}
     }
     else if (case_tmp < MOITIE_CASES)
     {
-        while (case_tmp-- && ((nb_grains = partie_suivante->plateau[case_tmp]) == 2 || nb_grains == 3)) {
+        while ((nb_grains = partie_suivante->plateau[case_tmp]) == 2 || nb_grains == 3) {
             partie_suivante->grains_humain += nb_grains;
             partie_suivante->plateau[case_tmp] = 0;
+            case_tmp--;
         }
     }
 }
 
 
-
-// Retourne la valeur maximale du tableau
+/* Retourne la valeur maximale du tableau*/
 int valeurMax(int const prof, int* const tableau) {
-    int maximum;
+    int maximum = 0;
 
     if (prof == 0) {
 		for(int i = 0; i < MOITIE_CASES; i++) {
@@ -151,10 +147,9 @@ int valeurMax(int const prof, int* const tableau) {
     return maximum;
 }
 
-
-// Retourne la valeur minimale du tableau
+/* Retourne la valeur minimale du tableau */
 int valeurMin(int const prof, int* const tableau) {
-    int minimum;
+    int minimum = 0;
 
     if (prof == 0) {
     	for(int i = 0; i < MOITIE_CASES; i++) {
@@ -169,10 +164,7 @@ int valeurMin(int const prof, int* const tableau) {
 }
 
 
-
-
-
-// Algotithme Min-max pour déterminer le meilleur coup à jouer
+/* Algotithme Min-max pour déterminer le meilleur coup à jouer*/
 int valeurMinMax(EtatJeu *partie_actuelle, int const joueur, int const profondeur, int const min, int const max) {
     int tableau_valeurs[MOITIE_CASES];
     
@@ -189,10 +181,9 @@ int valeurMinMax(EtatJeu *partie_actuelle, int const joueur, int const profondeu
     tableau_valeurs[9] = 0;
     
 
-
-    // Conditions d'arrêt de la récurrence :
-    //  - la partie est terminée
-    //  - on a atteint la profondeur maximale
+    /* Conditions d'arrêt de la récurrence :
+      - la partie est terminée
+      - on a atteint la profondeur maximale */
     if (positionFinale(partie_actuelle, joueur)) {
         if (partie_actuelle->grains_humain > partie_actuelle->grains_ordi) return -GRAINS_MAX;
         else if (partie_actuelle->grains_ordi > partie_actuelle->grains_humain) return GRAINS_MAX;

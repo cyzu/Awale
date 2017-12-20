@@ -18,9 +18,9 @@ void verifieOption (int *joueur) {
 }
 
 
-void afficherJeu (EtatJeu *a) {
+void afficherJeu (EtatJeu const *a) {
     printf("\n        (ordi)\n  1     2     3     4     5     6     7     8     9     10\n[%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d]      score : %d\n", a->plateau[0], a->plateau[1], a->plateau[2], a->plateau[3], a->plateau[4], a->plateau[5], a->plateau[6], a->plateau[7], a->plateau[8], a->plateau[9], a->grains_ordi);
-    printf("[%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d]      score : %d\n  20    19    18    17    16    15    14    13    12    11\n        (vous)\n\n\n", a->plateau[19], a->plateau[18], a->plateau[17], a->plateau[16], a->plateau[15], a->plateau[14], a->plateau[13], a->plateau[12], a->plateau[11], a->plateau[10], a->grains_humain);
+    printf("[%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d] [%3d]      score : %d\n  10     9     8     7     6     5     4     3     2     1\n        (vous)\n\n\n", a->plateau[19], a->plateau[18], a->plateau[17], a->plateau[16], a->plateau[15], a->plateau[14], a->plateau[13], a->plateau[12], a->plateau[11], a->plateau[10], a->grains_humain);
 }
 
 
@@ -31,19 +31,26 @@ void affichageDepart(){
 }
 
 
-void affichageFin(EtatJeu *partie){
+void affichageFin(EtatJeu const *partie, int const resultat){
     printf("\n\n LA PARTIE EST TERMINÉE ~☆\n\nAvec ce jeu :");
     afficherJeu(partie);
+    
+    int restant_ordi = 0, restant_humain = 0;
+    for (int i = 0; i < MOITIE_CASES; i++) {
+        restant_ordi += partie->plateau[i];
+        restant_humain += partie->plateau[i + 10];
+    }
+    if (restant_ordi == 0 && partie->joueur == 0) printf("Le gagnant est  :  vous! BRAVO!!\n");
+    else if (restant_humain == 0 && !(partie->joueur == 0)) printf("Le gagnant est  :  l'ordinateur...\n");
 
-    if (partie->grains_ordi > partie->grains_humain)     printf("Le gagnant est  :  l'ordinateur...\n");
-	else if (partie->grains_ordi < partie->grains_humain)   printf("Le gagnant est  :  vous! BRAVO!!\n");
+    else if (partie->grains_ordi > partie->grains_humain) printf("Le gagnant est  :  l'ordinateur...\n");
+	else if (partie->grains_ordi < partie->grains_humain) printf("Le gagnant est  :  vous! BRAVO!!\n");
     else printf("\nVous avez obtenu le meme score.\n");
 }
 
 
 
-void humainJoue(EtatJeu *partie, int case_choisie)
-{
+void humainJoue(EtatJeu *partie, int const case_choisie){
     int case_tmp = case_choisie;
     int nb_grains = partie->plateau[case_choisie];
     
@@ -60,18 +67,17 @@ void humainJoue(EtatJeu *partie, int case_choisie)
     
     // dans le plateau de l'ordi
     if(case_tmp < MOITIE_CASES) {
-    	while (case_tmp-- && ((nb_grains = partie->plateau[case_tmp]) == 2 || nb_grains == 3)) {
+    	while ((nb_grains = partie->plateau[case_tmp]) == 2 || nb_grains == 3) {
     		partie->grains_humain += nb_grains;
     		partie->plateau[case_tmp] = 0;
+            case_tmp--;
 		}
     }
-    partie->joueur = !partie->joueur;
 }
 
 
 
-void ordiJoue(EtatJeu *partie)
-{
+void ordiJoue(EtatJeu *partie){
 	clock_t tic = clock();
 
 	int case_choisie = valeurMinMax(partie, 0, 0, MIN_NUM, MAX_NUM);
@@ -79,10 +85,7 @@ void ordiJoue(EtatJeu *partie)
     clock_t toc = clock();
     printf("\n\nElapsed: %f seconds\n\n", (double)(toc - tic) / CLOCKS_PER_SEC);
 
-    
-
     printf("**** L'ordinateur a choisi la case %d ↓\n", case_choisie + 1);
-
 
     int case_tmp = case_choisie;
     int nb_grains = partie->plateau[case_choisie];
@@ -99,41 +102,38 @@ void ordiJoue(EtatJeu *partie)
     }
     
     // dans le plateau du joueur
-    while ((case_tmp-- - MOITIE_CASES) && ((nb_grains = partie->plateau[case_tmp]) == 2 || nb_grains == 3)) {
+    while ((case_tmp >= MOITIE_CASES) && ((nb_grains = partie->plateau[case_tmp]) == 2 || nb_grains == 3)) {
     	partie->grains_ordi += nb_grains;
     	partie->plateau[case_tmp] = 0;
+        case_tmp--;
 	}
-    partie->joueur = !partie->joueur;
 }
 
 
 
-void jouer(EtatJeu *partie)
-{
-    int case_;
+void jouer(EtatJeu *partie){
+    int case_, resultat;
+    afficherJeu(partie);
     
-    while (!positionFinale(partie, partie->joueur))
-    {
-        afficherJeu(partie);
+    while (!(resultat = positionFinale(partie, partie->joueur))){
         if (partie->joueur == 0) ordiJoue(partie);
         else {
             printf("A vous de jouer ! Quel case choisissez-vous ?   ");
             scanf("%d", &case_);
-            while (!(case_ <= NB_TOTAL_CASES && case_ > MOITIE_CASES)){
+            while (!(case_ <= MOITIE_CASES && case_ > 0)){
                 printf("\n/!\\ Cette case ne vous appartient pas !\nChoisissez à partir de votre plateau :  ");
-                
                 scanf("%d", &case_);
             }
             
-            while (partie->plateau[case_ -1] <= 0){
+            while (partie->plateau[case_ + 9] <= 0){
                 printf("\n/!\\ Il n'y a pas de graine sur cette case !\nChangez :  ");
-                
                 scanf("%d", &case_);
             }
-            case_ = case_ - 1;
+            case_ = case_ + 9;
             humainJoue(partie, case_);
         }
-        
+        afficherJeu(partie);
+        partie->joueur = !partie->joueur;
     }
-    affichageFin(partie);
+    affichageFin(partie, resultat);
 }

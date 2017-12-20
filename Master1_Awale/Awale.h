@@ -27,7 +27,7 @@ typedef struct {
 } EtatJeu;
 
 
-void initialisation (EtatJeu *a, int joueur);
+void initialisation (EtatJeu *a, int const joueur);
 
 /* Fonctions utilisées par min-max */
 int positionFinale(EtatJeu *partie, const int joueur);
