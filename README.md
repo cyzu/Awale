@@ -3,7 +3,7 @@
 ###### Université Nice Sophia-Antipolis
 
 ### Description du jeu
-Ce jeu originaire d'afraique, se joue par toutes les personnes, pour tous ages, quotidiennement.
+Ce jeu originaire d'afrique, se joue par toutes les personnes, pour tous ages, quotidiennement.
 
 On possède une planche de ayant 2 rangées de 6 trous, c'est à dire 12 trous au total.
 Il est initialisé avec 4 cailloux dans tous les trous.
@@ -62,6 +62,7 @@ Télécharger le projet puis :
 
 ### Commentaires et remerciements
 Nous avons réaliser ce projet en moins d'une semaine. Ayant un gros manque de temps, nous n'avons pas pu implémenter une bonne fonction d'évaluation déterminant les meilleurs coup à jouer pour gagner la partie. C'est pourquoi l'ordinateur est d'un niveau plutôt faible. La profondeur de recherche dans l'arbre reste de même assez faible.
+
 
 Cependant, pendant ce court lapse de temps, nous avons pu débuté dans l'optimisation d'un programme. Une fois l'implémentation du code plutôt correct, nous nous sommes concentrées sur l'optimisation du temps de l'exécution du programme. En se servant des cours suivis et des recherches, nous avons comparé des bouts de code, nous cherchions à supprimer des boucles, des variables, et enfin nous réfléchissions à un nouvel algorithme faisant les mêmes instructions.
 Par cette manière nous avons ajouter les mots-clés ‘const‘ et ‘inline‘ dans notre code mais nous avons remarqué que le compilateur est aujourd'hui très puissant, sachant bien optimiser sans avoir de l'aide du programmeur.

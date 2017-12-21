@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "Awale.h"
 
+
 /* Initialisation de la structure */
 void initialisation (EtatJeu *a, int const joueur) {
     for(int i =0; i< NB_TOTAL_CASES; i ++) a->plateau[i] = 4;
@@ -30,7 +31,7 @@ void initialisation (EtatJeu *a, int const joueur) {
 int positionFinale(EtatJeu *partie, const int joueur){
     // Un des joueurs a récupéré plus de la moitié des graines
 	int moitie_grains = GRAINS_MAX/2;
-    if (partie->grains_humain >= moitie_grains || partie->grains_ordi >= moitie_grains) return 1;
+    if (partie->grains_humain > moitie_grains || partie->grains_ordi > moitie_grains) return 1;
     
 
     int sum_ordi = partie->plateau[0] + partie->plateau[1] + partie->plateau[2] + partie->plateau[3] + partie->plateau[4] + partie->plateau[5] + partie->plateau[6] + partie->plateau[7] + partie->plateau[8] + partie->plateau[9];
@@ -39,9 +40,15 @@ int positionFinale(EtatJeu *partie, const int joueur){
 
     // Vérifie qu'il n'y a plus de graines chez le joueur
     if (joueur == 0) {
-    	if(sum_ordi == 0) return 1;
+        if(sum_ordi == 0){
+            partie->grains_humain += sum_humain;
+            return 1;
+        }
     }
-    else if (sum_humain == 0) return 1;
+    else if (sum_humain == 0) {
+        partie->grains_ordi += sum_ordi;
+        return 1;
+    }
     
 
     // Etat boucle (il n'y a plus qu'une graine chez chaque joueur sans pouvoir être prises
@@ -138,7 +145,7 @@ int valeurMax(int const prof, int* const tableau) {
 		for(int i = 0; i < MOITIE_CASES; i++) {
         	if (tableau[i] > tableau[maximum]) maximum = i;
         }
-    }
+           }
     else {
     	for(int i = 0; i < MOITIE_CASES; i++) {
             if (tableau[i] > maximum) maximum = tableau[i];
@@ -155,6 +162,8 @@ int valeurMin(int const prof, int* const tableau) {
     	for(int i = 0; i < MOITIE_CASES; i++) {
         	if (tableau[i] < tableau[minimum]) minimum = i;
         }
+        
+        
     } else {
     	for(int i = 0; i < MOITIE_CASES; i++) {
             if (tableau[i] < minimum) minimum = tableau[i];

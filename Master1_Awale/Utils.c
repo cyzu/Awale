@@ -78,12 +78,7 @@ void humainJoue(EtatJeu *partie, int const case_choisie){
 
 
 void ordiJoue(EtatJeu *partie){
-	clock_t tic = clock();
-
 	int case_choisie = valeurMinMax(partie, 0, 0, MIN_NUM, MAX_NUM);
-
-    clock_t toc = clock();
-    printf("\n\nElapsed: %f seconds\n\n", (double)(toc - tic) / CLOCKS_PER_SEC);
 
     printf("**** L'ordinateur a choisi la case %d ↓\n", case_choisie + 1);
 
